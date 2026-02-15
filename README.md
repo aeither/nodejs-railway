@@ -2,7 +2,7 @@
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/YDRT1o?referralCode=CREDITS&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
-Node.js is a JavaScript runtime built on Chrome's V8 engine that enables developers to build scalable server-side applications. It uses an event-driven, non-blocking I/O model that makes it lightweight and efficient for real-time applications and APIs.
+Node.js is a JavaScript runtime built on Chrome's V8 engine that enables developers to build scalable server-side applications. It uses an event-driven, non-blocking I/O model that makes it lightweight and efficient for real-time applications and APIs. This template uses TypeScript for enhanced type safety and developer experience.
 
 ## About Hosting Node.js
 
@@ -23,16 +23,21 @@ Hosting Node.js applications requires a platform that supports JavaScript runtim
 ```bash
 npm install
 ```
+3. Build the TypeScript code:
+```bash
+npm run build
+```
 
 ### Running Locally
 
-**Development mode** (with hot-reload):
+**Development mode** (with hot-reload using tsx):
 ```bash
 npm run dev
 ```
 
-**Production mode**:
+**Production mode** (requires build first):
 ```bash
+npm run build
 npm start
 ```
 
@@ -51,21 +56,24 @@ curl http://localhost:3000/health
 
 ## Dependencies for Node.js Hosting
 
-- Node.js runtime (v14 or higher recommended)
+- Node.js runtime (v18 or higher recommended)
+- TypeScript (for development)
 - npm or yarn package manager
 
 ### Deployment Dependencies
 
-- [Express.js](https://expressjs.com/) - Fast, unopinionated web framework
+- [Express.js v5](https://expressjs.com/) - Fast, unopinionated web framework
+- [TypeScript](https://www.typescriptlang.org/) - Typed superset of JavaScript
+- [tsx](https://github.com/privatenumber/tsx) - TypeScript execution and REPL for Node.js
 - [Node.js Documentation](https://nodejs.org/docs/latest/api/)
 
 ### Implementation Details
 
-This template includes a minimal Express.js server with JSON parsing middleware and two endpoints:
+This template includes a minimal Express.js v5 server written in TypeScript with JSON parsing middleware and two endpoints:
 
-```javascript
+```typescript
 // Root endpoint with timestamp
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.json({ 
     message: 'Welcome to Node.js API',
     status: 'running',
@@ -74,12 +82,12 @@ app.get('/', (req, res) => {
 });
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok' });
 });
 ```
 
-The server reads the `PORT` environment variable (automatically set by Railway) and includes development mode with hot-reload using Node.js `--watch` flag.
+The server reads the `PORT` environment variable (automatically set by Railway) and includes development mode with hot-reload using `tsx`. TypeScript files are compiled to the `dist/` directory for production deployment.
 
 ## Why Deploy Node.js on Railway?
 
